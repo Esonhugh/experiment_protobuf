@@ -7,9 +7,9 @@ type MsgEngine struct {
 	Sender  chan message.ServerMessage
 }
 
-func (m *MsgEngine) Send(data message.ServerMessage) error {
+func (m *MsgEngine) Send(data message.ServerMessage) *MsgEngine {
 	m.Sender <- data
-	return nil
+	return m
 }
 
 func (m *MsgEngine) Read() message.ServerMessage {
