@@ -17,13 +17,16 @@ func (m *MsgEngine) Send(data message.ServerMessage) *MsgEngine {
 	if err != nil {
 		log.Println("marshal error:", err)
 	}
+	log.Println("need send:", send)
 	m.Sender <- send
 	return m
 }
 
 func (m *MsgEngine) Read() message.ServerMessage {
 	var msgs message.ServerMessage
-	err := proto.Unmarshal(<-m.Reciver, &msgs)
+	received := <-m.Reciver
+	log.Println("received:", received)
+	err := proto.Unmarshal(received, &msgs)
 	if err != nil {
 		log.Println("unmarshal error:", err)
 	}
