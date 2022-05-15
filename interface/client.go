@@ -1,7 +1,5 @@
 package _interface
 
-import "proto_test/proto/message"
-
 type Client struct {
 	*MsgEngine
 }
@@ -9,8 +7,8 @@ type Client struct {
 func InitClient() *Client {
 	newClient := &Client{
 		&MsgEngine{
-			Reciver: make(chan message.ServerMessage, 1),
-			Sender:  make(chan message.ServerMessage, 1),
+			Reciver: make(chan []byte, 1),
+			Sender:  make(chan []byte, 1),
 		},
 	}
 	return newClient

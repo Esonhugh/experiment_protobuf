@@ -21,8 +21,8 @@ type Server struct {
 func InitSever() *Server {
 	newServer := &Server{
 		MsgEngine: &MsgEngine{
-			Reciver: make(chan message.ServerMessage, 1),
-			Sender:  make(chan message.ServerMessage, 1),
+			Reciver: make(chan []byte, 1),
+			Sender:  make(chan []byte, 1),
 		},
 	}
 	return newServer

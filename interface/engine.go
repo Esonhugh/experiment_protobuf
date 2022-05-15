@@ -1,18 +1,31 @@
 package _interface
 
-import "proto_test/proto/message"
+import (
+	"log"
+	"proto_test/proto/message"
+)
+
+import "github.com/golang/protobuf/proto"
 
 type MsgEngine struct {
-	Reciver chan message.ServerMessage
-	Sender  chan message.ServerMessage
+	Reciver chan []byte
+	Sender  chan []byte
 }
 
 func (m *MsgEngine) Send(data message.ServerMessage) *MsgEngine {
-	m.Sender <- data
+	var send, err = proto.Marshal(&data)
+	if err != nil {
+		log.Println("marshal error:", err)
+	}
+	m.Sender <- send
 	return m
 }
 
 func (m *MsgEngine) Read() message.ServerMessage {
-	msg := <-m.Reciver
-	return msg
+	var msgs message.ServerMessage
+	err := proto.Unmarshal(<-m.Reciver, &msgs)
+	if err != nil {
+		log.Println("unmarshal error:", err)
+	}
+	return msgs
 }
