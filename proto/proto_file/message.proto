@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package message;
+option go_package="/message";
+
+message ServerMessage {
+  int64 code = 1;
+  enum type {
+    SHORT = 0;
+    SUMMARY = 1;
+    LONG = 2;
+    EMERGENCY = 3;
+  } ;
+  type msgtype = 2;
+  string summary = 3;
+  string content = 4;
+
+}
